@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GuestsService } from './guests/guests.service';
+import { GuestsController } from './guests/guests.controller';
+import { GuestEntity } from './guests/guest.entity';
 
-import { GuestEntity } from './guest/guest.entity';
-import { GuestsController } from './guest/guest.controller';
-import { GuestService } from './guest/guest.service';
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { GuestService } from './guest/guest.service';
   ],
   providers: [
     AppService,
-    GuestService,
+    GuestsService,
   ],
 })
 export class AppModule { }

@@ -4,7 +4,7 @@ import { RepositoryService } from '@nestjsx/crud/typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
-export class GuestService extends RepositoryService<GuestEntity> {
+export class GuestsService extends RepositoryService<GuestEntity> {
   constructor(@InjectRepository(GuestEntity) repository) {
     super(repository);
   }
