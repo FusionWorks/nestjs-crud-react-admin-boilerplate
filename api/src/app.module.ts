@@ -1,23 +1,20 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from 'nestjs-config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuestsService } from './guests/guests.service';
 import { GuestsController } from './guests/guests.controller';
 import { GuestEntity } from './guests/guest.entity';
+import * as path from 'path';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'nodeuser',
-      password: '1234',
-      database: 'guests',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+    ConfigModule.load(path.resolve(__dirname, 'config', '*.{ts,js}')),
+    TypeOrmModule.forRootAsync({
+      useFactory: (config: ConfigService) => config.get('database'),
+      inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([GuestEntity]),
   ],
