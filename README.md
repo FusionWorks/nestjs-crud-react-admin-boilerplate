@@ -1,5 +1,5 @@
 # React Admin + NestJS CRUD Quick Start
-A boilerplate for API and Admin UI using React Admin, NestJS Crud and MySQL
+A boilerplate for API and Admin UI using [React Admin](https://github.com/marmelab/react-admin), [NestJS CRUD](https://github.com/nestjsx/crud) and MySQL.
 
 ## Whats inside?
 
