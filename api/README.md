@@ -32,6 +32,8 @@
 
 ```bash
 $ npm install
+$ cp .env.example .env
+# update .env file to match your MySQL settings. 
 ```
 
 ## Running the app

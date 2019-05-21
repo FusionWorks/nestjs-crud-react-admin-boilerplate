@@ -1,5 +1,4 @@
-
-# NestJS + Crud + React, Admin boilerplate
+# React Admin + NestJS CRUD Quick Start
 
 <p align="center">
   <i><a href="README.md">Overview</a></i>
@@ -12,11 +11,16 @@
 
 ## Overview
 
-NestJS + Crud + ReactAdmin boilerplate is a full-stack Admin application solution, and starter project. It is intended for developers who are looking to fast-track building a strongly typed, enterprise-grade, modern NodeJs application, with supporting tooling.
+A boilerplate for API and Admin UI using [React Admin](https://github.com/marmelab/react-admin), [NestJS CRUD](https://github.com/nestjsx/crud) and MySQL.
 
 This implementation uses the [BFF](https://samnewman.io/patterns/architectural/bff/) pattern, leveraging [NestJS](https://nestjs.com/) as the primary framework for the backend. The frontend example is in [React](https://reactjs.org/).
 
+## Whats inside?
+
+A minimalistic setup for managing guests list.
+
 ## Installation & Usage
+You should have NodeJS, yarn (or npm) and MySQL installed. 
 
 This is a Mono-repo project containing a [Backend](backend/README.md), [Frontend](frontend/README.md). Follow the README navigation links for details on each of these.
 
