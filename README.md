@@ -3,9 +3,9 @@
 <p align="center">
   <i><a href="README.md">Overview</a></i>
   &nbsp;&nbsp;&nbsp;
-	<a href="frontend/README.md">Frontend</a>
+	<a href="admin-ui/README.md">Frontend</a>
   &nbsp;&nbsp;&nbsp;
-	<a href="backend/README.md">Backend</a>
+	<a href="api/README.md">Backend</a>
   &nbsp;&nbsp;&nbsp;
 </p>
 
@@ -22,7 +22,7 @@ A minimalistic setup for managing guests list.
 ## Installation & Usage
 You should have NodeJS, yarn (or npm) and MySQL installed. 
 
-This is a Mono-repo project containing a [Backend](backend/README.md), [Frontend](frontend/README.md). Follow the README navigation links for details on each of these.
+This is a Mono-repo project containing a [Backend](api/README.md), [Frontend](admin-ui/README.md). Follow the README navigation links for details on each of these.
 
 ## Key Features
 
@@ -60,5 +60,5 @@ This project aims to provide an enterprise-ready web-application skeleton, out-o
 Further details on each of the systems contained in this project can be found via the following links:
 
 - _[Overview](README.md)_
-- [Frontend](frontend/README.md)
-- [Backend](backend/README.md)
+- [Frontend](admin-ui/README.md)
+- [Backend](api/README.md)
