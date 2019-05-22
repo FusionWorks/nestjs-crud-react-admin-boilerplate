@@ -111,3 +111,6 @@ export const GuestEdit = props => (
 ### We are done!
 
 Read React Admins's [documentation](https://marmelab.com/react-admin/index.html) if you need to implement more complex scenarious and behaviours
+
+## Follow us
+[Website](https://fusion.works) - [Facebook](https://www.facebook.com/FusionWorksMD/) - [LinkedIn](https://www.linkedin.com/company/fusionworks-moldova/)
