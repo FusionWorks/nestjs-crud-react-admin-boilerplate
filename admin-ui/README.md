@@ -1,86 +1,113 @@
 # React Admin + NestJS CRUD Quick Start
 
 <p align="center">
-  <a href="README.md">Overview</a>
+  <a href="../README.md">Overview</a>
   &nbsp;&nbsp;&nbsp;
-	<i><a href="admin-ui/README.md">Frontend</a></i>
+  <i><a href="README.md">Frontend</a></i>
   &nbsp;&nbsp;&nbsp;
-	<a href="api/README.md">Backend</a>
+  <a href="../api/README.md">Backend</a>
   &nbsp;&nbsp;&nbsp;
 </p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Administration panel UI
 
-## Available Scripts
+Frontend portion of this boilerplate is based on awesome [React Admin](https://github.com/marmelab/react-admin) framework, which greatly simplifies creation of admin interfaces. UI allows performing basic CRUD operations on guests list.
 
-In the project directory, you can run:
+## Prerequisites
 
-### `npm start`
+NodeJS, NPM and Yarn installed, [Backend](../api/README.md) should be up and running.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Running the app
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```bash
+cd admin-ui
+yarn install
+yarn start
+```
 
-### `npm test`
+## Creating from scratch
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Initializing React application
 
-### `npm run build`
+```bash
+npm install -g create-react-app
+create-react-app admin-ui
+cd admin-ui
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Adding React Admin to the project
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```bash
+yarn add react-admin prop-types`
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Adding [dataprovider](https://marmelab.com/react-admin/DataProviders.html) to match NestJS CRUD backend: [@FusionWorks/ra-data-nest-crud](https://github.com/FusionWorks/react-admin-nestjsx-crud-dataprovider)
 
-### `npm run eject`
+```bash
+yarn add @fusionworks/ra-data-nest-crud
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Initializing React Admin component and creating guest editor
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Update [src/App.js](src/App.js)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```javascript
+import React from 'react';
+import { Admin, Resource, ShowGuesser, ListGuesser } from 'react-admin';
+import crudProvider from '@fusionworks/ra-data-nest-crud';
+import { GuestCreate, GuestEdit } from './Guests';
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+const dataProvider = crudProvider('http://localhost:3001');
+const App = () => (
+  <Admin dataProvider={dataProvider}>
+    <Resource name="guests" list={ListGuesser} create={GuestCreate} edit={GuestEdit} show={ShowGuesser} />
+  </Admin>
+);
+export default App;
+```
 
-## Learn More
+And add corresponding forms to [src/Guests/index.js](src/Guests/index.js). Please note that we are using React Admin's ListGuesser and ShowGuesser for list and show veiws. If needed they could be replaced with custom implementation same way as create and edit forms below.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+import React from 'react';
+import {
+  Create,
+  SimpleForm,
+  TextInput,
+  BooleanInput,
+  Edit,
+  Filter,
+  required,
+  email,
+} from 'react-admin';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+const validateEmail = [required(), email()];
+const validateRequired = required();
 
-### Code Splitting
+export const GuestCreate = props => (
+  <Create {...props}>
+    <SimpleForm redirect="show">
+      <TextInput source="firstName" validate={validateRequired} />
+      <TextInput source="lastName" validate={validateRequired} />
+      <TextInput source="email" validate={validateEmail} />
+    </SimpleForm>
+  </Create>
+);
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+const GuestEditTitle = ({ record }) => (<span>{`${record.firstName} ${record.lastName}`}</span>);
 
-### Analyzing the Bundle Size
+export const GuestEdit = props => (
+  <Edit {...props} title={<GuestEditTitle />}>
+    <SimpleForm redirect="list">
+      <TextInput source="firstName" validate={validateRequired} />
+      <TextInput source="lastName" validate={validateRequired} />
+      <TextInput source="email" validate={validateEmail} />
+      <BooleanInput source="isPresent" />
+    </SimpleForm>
+  </Edit>
+);
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### We are done!
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-## Readme Navigation
-
-Further details on each of the systems contained in this project can be found via the following links:  
--  [Overview](README.md)
--  _[Frontend](admin-ui/README.md)_
--  [Backend](api/README.md)
+Read React Admins's [documentation](https://marmelab.com/react-admin/index.html) if you need to implement more complex scenarious and behaviours
