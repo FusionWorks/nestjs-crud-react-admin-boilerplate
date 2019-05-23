@@ -3,11 +3,8 @@ import { ConfigModule, ConfigService } from 'nestjs-config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GuestsService } from './guests/guests.service';
-import { GuestsController } from './guests/guests.controller';
-import { GuestEntity } from './guests/guest.entity';
+import { GuestsModule } from './guests/guests.module';
 import * as path from 'path';
-
 
 @Module({
   imports: [
@@ -16,15 +13,13 @@ import * as path from 'path';
       useFactory: (config: ConfigService) => config.get('database'),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([GuestEntity]),
+    GuestsModule,
   ],
   controllers: [
     AppController,
-    GuestsController,
   ],
   providers: [
     AppService,
-    GuestsService,
   ],
 })
 export class AppModule { }

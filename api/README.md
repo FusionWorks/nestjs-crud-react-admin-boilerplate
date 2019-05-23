@@ -10,46 +10,47 @@
   &nbsp;&nbsp;&nbsp;
 </p>
 
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+Backend portion of this boilerplate is an opinionated TypeScript boilerplate for Nest, including nodemon, TSLint, Jest. At this point API allows to perform CRUD operations about guests list.
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
+NodeJs 10+, Npm ( or Yarn ) installed, also if you dont have NestCLI run `npm install -g @nestjs/cli`.
 
 ## Installation
 
 ```bash
-$ npm install
 $ cp .env.example .env
-# update .env file to match your MySQL settings. 
+# update .env file to match your MySQL settings.
+$ mkdir config 
+```
+
+Create file inside `src/config` named `database.ts` with context:
+```Typescript
+export default {
+  host: process.env.DB_HOST,
+  type: 'mysql',
+  port: process.env.DB_PORT || 3306,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  entities: ['src/**/*.entity{.ts,.js}'],
+  synchronize: process.env.DB_SYNCRONIZE === 'true',
+  logging: process.env.DB_LOGGING === 'true',
+};
+```
+
+#### Yarn
+```bash
+yarn install
+```
+
+#### NPM
+```bash
+npm install
 ```
 
 ## Running the app
 
+#### NPM
 ```bash
 # development
 $ npm run start
@@ -61,8 +62,21 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+#### Yarn
+```bash
+# development
+$ yarn run start
+
+# watch mode
+$ yarn run start:dev
+
+# production mode
+$ yarn run start:prod
+```
+
 ## Test
 
+#### NPM
 ```bash
 # unit tests
 $ npm run test
@@ -74,19 +88,124 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+#### Yarn
+```bash
+# unit tests
+$ yarn run test
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# e2e tests
+$ yarn run test:e2e
 
-## Stay in touch
+# test coverage
+$ yarn run test:cov
+```
+## Creating from scratch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+#### Initializing API application
 
-## License
+Run `nest new api` inside main project folder ( it will create folder named `api`).  
+Move to `api` folder `cd api`.  
 
-  Nest is [MIT licensed](LICENSE).
+#### Prepare required dependencies
+
+##### Typeorm
+`npm install @nestjs/typeorm typeorm mysql class-validator class-transformer`
+
+##### NestJSX
+`npm i @nestjsx/crud nestjs-config`
+
+### Create all required files.
+
+##### Guests Controller
+Run `nest generate controller guests` **or** `nest g co guests`.  
+
+At the very top add: 
+```Typescript
+import { Crud } from '@nestjsx/crud';
+import { GuestsService } from './guests.service';
+```
+
+Add `@Crud(GuestEntity)` before `@Controller('guests')`.
+
+Add constructor: 
+```Typescript
+constructor(public service: GuestsService) { }
+```
+
+##### Guests Service
+Run `nest generate service guests` **or** `nest g s guests`. 
+
+At the very top add: 
+```Typescript
+import { GuestEntity } from './guest.entity';
+import { RepositoryService } from '@nestjsx/crud/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+```
+Extend class `GuestsService` with `extends RepositoryService<GuestEntity>`.  
+
+Add constructor: 
+```Typescript
+constructor(@InjectRepository(GuestEntity) repository) {
+   super(repository);
+ }
+```
+
+##### Guests Entity
+Go to `src/guests` folder and create file named `guest.entity.ts` with context:
+
+```Typescript
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { IsEmail } from 'class-validator';
+
+@Entity({ name: 'guests' })
+export class GuestEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @Column({
+    unique: true,
+  })
+  @IsEmail()
+  email: string;
+
+  @Column({ default: false })
+  isPresent: boolean;
+}
+```
+
+##### Guests Module
+Run `nest generate module guests` **or** `nest g mo guests`.  
+Replace its context with:
+```Typescript
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { GuestsController } from './guests.controller';
+import { GuestEntity } from './guest.entity';
+import { GuestsService } from './guests.service';
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([GuestEntity]),
+  ],
+  controllers: [
+    GuestsController,
+  ],
+  providers: [
+    GuestsService,
+  ],
+})
+export class GuestsModule { }
+```
+
+### We are done!
+
+Read NestJs's [documentation](https://docs.nestjs.com/) if you need to implement more complex scenarious and behaviours.
   
 ## Readme Navigation
 
@@ -94,3 +213,15 @@ Further details on each of the systems contained in this project can be found vi
 -  [Overview](README.md)
 -  [Frontend](admin-ui/README.md)
 -  _[Backend](api/README.md)_
+
+## Follow us
+[Website](https://fusion.works) - [Facebook](https://www.facebook.com/FusionWorksMD/) - [LinkedIn](https://www.linkedin.com/company/fusionworks-moldova/)
+
+<p align="center">
+  <a href="https://fusion.works">Website</a>
+  &nbsp;&nbsp;&nbsp;
+	<a href="https://www.facebook.com/FusionWorksMD/">Facebook</a>
+  &nbsp;&nbsp;&nbsp;
+	<a href="https://www.linkedin.com/company/fusionworks-moldova/">LinkedIn</a>
+  &nbsp;&nbsp;&nbsp;
+</p>
