@@ -38,7 +38,7 @@ cd admin-ui
 ### Adding React Admin to the project
 
 ```bash
-yarn add react-admin prop-types`
+yarn add react-admin prop-types
 ```
 
 ### Adding [dataprovider](https://marmelab.com/react-admin/DataProviders.html) to match NestJS CRUD backend: [@FusionWorks/ra-data-nest-crud](https://github.com/FusionWorks/react-admin-nestjsx-crud-dataprovider)
