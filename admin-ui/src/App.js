@@ -1,12 +1,15 @@
 import React from 'react';
-import { Admin, Resource, ShowGuesser, ListGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import crudProvider from '@fusionworks/ra-data-nest-crud';
-import { GuestCreate, GuestEdit } from './Guests';
+import suppliers from './Suppliers';
+import addresses from './Addresses';
+import { url } from './config/connection';
 
-const dataProvider = crudProvider('http://localhost:3001');
+const dataProvider = crudProvider(url);
 const App = () => (
   <Admin dataProvider={dataProvider}>
-    <Resource name="guests" list={ListGuesser} create={GuestCreate} edit={GuestEdit} show={ShowGuesser} />
+    <Resource name="supplier" {...suppliers} />
+    <Resource name="address" {...addresses} />
   </Admin>
 );
 export default App;
