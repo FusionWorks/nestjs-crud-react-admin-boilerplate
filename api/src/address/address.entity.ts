@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  BaseEntity,
+} from 'typeorm';
 import { CompanyEntity } from '../company/company.entity';
 
 @Entity({ name: 'address' })
@@ -21,7 +27,11 @@ export class AddressEntity extends BaseEntity {
   @Column()
   notes: string;
 
-  @Column('simple-json')
+  @Column({
+    type: 'json',
+    nullable: true,
+    comment: '{ lng: string, lat: string }',
+  })
   geo: { lng: string, lat: string };
 
   @Column({ nullable: true })
@@ -29,5 +39,4 @@ export class AddressEntity extends BaseEntity {
 
   @ManyToOne((type) => CompanyEntity, (company) => company.addresses)
   company: CompanyEntity;
-
 }

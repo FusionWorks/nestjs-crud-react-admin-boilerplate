@@ -18,11 +18,11 @@ export class S3Service {
   }
 
   async signIn(req: Request, res: Response): Promise<any> {
-    const { objectName, contentType, path } = req.query;
+    const { objectName, contentType, path = '' } = req.query;
     const objectNameChunks = objectName.split('/');
     const filename = objectNameChunks[objectNameChunks.length - 1];
     const mimeType = contentType;
-    const fileKey = `${path || ''}/${objectName}`;
+    const fileKey = `${path}/${objectName}`;
     const params = {
       Bucket: this.s3Bucket,
       Key: fileKey,

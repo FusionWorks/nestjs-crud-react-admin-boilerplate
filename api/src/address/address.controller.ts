@@ -10,6 +10,5 @@ import { AddressEntity } from './address.entity';
 })
 @Controller('address')
 export class AddressController {
-  constructor(public service: AddressService) {
-  }
+  constructor(public service: AddressService) { }
 }

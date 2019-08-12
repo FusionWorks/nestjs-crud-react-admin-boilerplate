@@ -16,8 +16,8 @@ import {
   TextInput,
   required,
 } from 'react-admin';
-import AddAddressButton from './AddAddressButton';
 import { url } from '../config/connection';
+import AddAddressButton from './AddAddressButton';
 
 const validateRequired = required();
 
@@ -95,14 +95,7 @@ const CompanyShow = props => (
 );
 
 const CompanyDescription = ({ record }) => {
-  return (
-    <div
-      /* eslint-disable-next-line react/no-danger */
-      dangerouslySetInnerHTML={
-        { __html: record.description }
-      }
-    />
-  );
+  return <div>{record.description}</div>;
 };
 
 const CompanyList = props => (

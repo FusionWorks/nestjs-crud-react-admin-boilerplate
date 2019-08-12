@@ -8,7 +8,7 @@ import { CompanyEntity } from './company.entity';
     type: CompanyEntity,
   },
 })
-@Controller('supplier')
+@Controller('company')
 export class CompanyController {
   constructor(public service: CompanyService) { }
 }

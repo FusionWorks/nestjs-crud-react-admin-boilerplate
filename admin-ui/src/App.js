@@ -1,7 +1,7 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
 import crudProvider from '@fusionworks/ra-data-nest-crud';
-import companies from './Suppliers';
+import companies from './Companies';
 import addresses from './Addresses';
 import { url } from './config/connection';
 
