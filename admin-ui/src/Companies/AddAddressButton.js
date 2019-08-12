@@ -14,7 +14,7 @@ const AddAddressButton = ({ classes, record }) => (
     className={classes.button}
     variant="raised"
     component={Link}
-    to={`/address/create?supplierId=${record.id}`}
+    to={`/address/create?companyId=${record.id}`}
     label="Add an address"
     title="Add an address"
   />

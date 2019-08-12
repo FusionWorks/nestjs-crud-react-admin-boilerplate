@@ -2,8 +2,8 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, AfterLoad, OneToMan
 import { AddressEntity } from '../address/address.entity';
 import { Type } from 'class-transformer';
 
-@Entity({ name: 'supplier' })
-export class SupplierEntity extends BaseEntity {
+@Entity({ name: 'company' })
+export class CompanyEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,7 +20,7 @@ export class SupplierEntity extends BaseEntity {
   })
   cover: Array<{ name: string, url: string }>;
 
-  @OneToMany((type) => AddressEntity, (address) => address.supplier)
+  @OneToMany((type) => AddressEntity, (address) => address.company)
   @Type((t) => AddressEntity)
   addresses: AddressEntity[];
 }

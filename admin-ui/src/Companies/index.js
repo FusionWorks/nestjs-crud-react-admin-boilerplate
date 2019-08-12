@@ -21,7 +21,7 @@ import { url } from '../config/connection';
 
 const validateRequired = required();
 
-const SupplierCreate = (props) => {
+const CompanyCreate = (props) => {
   return (
     <Create {...props}>
       <SimpleForm redirect="show">
@@ -45,11 +45,11 @@ const SupplierCreate = (props) => {
   );
 };
 
-const SupplierTitle = ({ record }) => (<span>{record.name}</span>);
+const CompanyTitle = ({ record }) => (<span>{record.name}</span>);
 
-const SupplierEdit = props => {
+const CompanyEdit = props => {
   return (
-    <Edit {...props} title={<SupplierTitle />}>
+    <Edit {...props} title={<CompanyTitle />}>
       <SimpleForm redirect="list">
         <TextInput source="name" />
         <TextInput source="description" />
@@ -70,8 +70,8 @@ const SupplierEdit = props => {
   );
 };
 
-const SupplierShow = props => (
-  <Show {...props} title={<SupplierTitle />}>
+const CompanyShow = props => (
+  <Show {...props} title={<CompanyTitle />}>
     <TabbedShowLayout>
       <Tab label="summary">
         <TextField source="name" />
@@ -79,7 +79,7 @@ const SupplierShow = props => (
         <S3FileField apiRoot={url} source="cover" />
       </Tab>
       <Tab label="addresses" path="addresses">
-        <ReferenceManyField reference="address" target="supplierId" addLabel={false}>
+        <ReferenceManyField reference="address" target="companyId" addLabel={false}>
           <Datagrid>
             <TextField source="name" />
             <TextField source="city" />
@@ -94,7 +94,7 @@ const SupplierShow = props => (
   </Show>
 );
 
-const SupplierDescription = ({ record }) => {
+const CompanyDescription = ({ record }) => {
   return (
     <div
       /* eslint-disable-next-line react/no-danger */
@@ -105,17 +105,17 @@ const SupplierDescription = ({ record }) => {
   );
 };
 
-const SupplierList = props => (
+const CompanyList = props => (
   <List {...props}>
-    <Datagrid rowClick="show" expand={<SupplierDescription />}>
+    <Datagrid rowClick="show" expand={<CompanyDescription />}>
       <TextField source="name" />
     </Datagrid>
   </List>
 );
 
 export default {
-  list: SupplierList,
-  create: SupplierCreate,
-  edit: SupplierEdit,
-  show: SupplierShow,
+  list: CompanyList,
+  create: CompanyCreate,
+  edit: CompanyEdit,
+  show: CompanyShow,
 };

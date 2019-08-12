@@ -22,8 +22,8 @@ const validateRequired = required();
 
 export const AddressCreate = props => {
   const { location } = props;
-  const { supplierId } = parse(location.search);
-  const redirect = supplierId ? `/supplier/${supplierId}/show/addresses` : false;
+  const { companyId } = parse(location.search);
+  const redirect = companyId ? `/company/${companyId}/show/addresses` : false;
 
   return (
     <Create {...props}>
@@ -33,8 +33,8 @@ export const AddressCreate = props => {
         <TextInput source="street" validate={validateRequired} />
         <TextInput source="zip" validate={validateRequired} />
         <TextInput source="notes" validate={validateRequired} />
-        {supplierId ? null : (
-          <ReferenceInput source="supplierId" reference="supplier">
+        {companyId ? null : (
+          <ReferenceInput source="companyId" reference="company">
             <SelectInput optionText="name" optionValue="id" />
           </ReferenceInput>
         )}
@@ -48,7 +48,7 @@ const AddressTitle = ({ record }) => (<span>{`${record.name}`}</span>);
 
 export const AddressEdit = props => (
   <Edit {...props} title={<AddressTitle />}>
-    <SimpleForm redirect={(basePath, id, data) => `/supplier/${data.supplierId}/show/addresses`}>
+    <SimpleForm redirect={(basePath, id, data) => `/company/${data.companyId}/show/addresses`}>
       <TextInput source="name" validate={validateRequired} />
       <TextInput source="city" validate={validateRequired} />
       <TextInput source="street" validate={validateRequired} />
@@ -68,8 +68,8 @@ export const AddressList = props => (
       <TextField source="zip" />
       <TextField source="notes" />
       <ReferenceField
-        source="supplierId"
-        reference="supplier"
+        source="companyId"
+        reference="company"
         linkType="show"
       >
         <TextField source="name" />
@@ -88,8 +88,8 @@ export const AddressShow = props => (
         <TextField source="zip" />
         <TextField source="notes" />
         <ReferenceField
-          source="supplierId"
-          reference="supplier"
+          source="companyId"
+          reference="company"
           linkType="show"
         >
           <TextField source="name" />

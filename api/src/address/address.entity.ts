@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, BaseEntity } from 'typeorm';
-import { SupplierEntity } from '../supplier/supplier.entity';
+import { CompanyEntity } from '../company/company.entity';
 
 @Entity({ name: 'address' })
 export class AddressEntity extends BaseEntity {
@@ -25,9 +25,9 @@ export class AddressEntity extends BaseEntity {
   geo: { lng: string, lat: string };
 
   @Column({ nullable: true })
-  supplierId: number;
+  companyId: number;
 
-  @ManyToOne((type) => SupplierEntity, (supplier) => supplier.addresses)
-  supplier: SupplierEntity;
+  @ManyToOne((type) => CompanyEntity, (company) => company.addresses)
+  company: CompanyEntity;
 
 }
