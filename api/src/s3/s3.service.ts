@@ -49,10 +49,10 @@ export class S3Service {
     });
   }
 
-  tempRedirect(caseId: string, key: string, res: Response) {
+  tempRedirect(id: string, key: string, res: Response) {
     const params = {
       Bucket: this.s3Bucket,
-      Key: `NestJsAdminBoilerplate/${caseId}/${key}`,
+      Key: `NestJsAdminBoilerplate/${id}/${key}`,
     };
 
     this.s3.getSignedUrl('getObject', params, (err, url) => {
