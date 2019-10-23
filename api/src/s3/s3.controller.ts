@@ -11,8 +11,8 @@ export class S3Controller {
     return this.s3service.signIn(req, res);
   }
 
-  @Get('/uploads/NestJsAdminBoilerplate/:caseId/:key')
-  fileRedirect(@Param('caseId') caseId: string, @Param('key') key: string, @Res() res: Response) {
-    return this.s3service.tempRedirect(caseId, key, res);
+  @Get('/uploads/NestJsAdminBoilerplate/:id/:key')
+  fileRedirect(@Param('id') id: string, @Param('key') key: string, @Res() res: Response) {
+    return this.s3service.tempRedirect(id, key, res);
   }
 }
